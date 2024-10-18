@@ -1,16 +1,12 @@
-# FlameCard
 
-A new Flutter project.
+# Flame Card
 
-## Getting Started
+A Solitaire based game made using flutter and flame.
 
-This project is a starting point for a Flutter application.
+## Demo
+![Game Screenshot](./docs/screenshots/game.png)
+[Card Game](https://shashinoor13.github.io/card-game-flutter/)
 
-A few resources to get you started if this is your first Flutter project:
+## Authors
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [@shashinoor13](https://github.com/Shashinoor13)

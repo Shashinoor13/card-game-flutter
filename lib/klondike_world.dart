@@ -29,7 +29,8 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
     Flame.device.fullScreen();
     Flame.device.setLandscape();
     await Flame.images.load('klondike-sprites.png');
-    await FlameAudio.audioCache.loadAll(['swipe.mp3', 'flip.mp3']);
+    await FlameAudio.audioCache
+        .loadAll(['swipe.mp3', 'flip.mp3', 'celebration.mp3']);
     stock.position = Vector2(cardGap, topGap);
     waste.position = Vector2(cardSpaceWidth + cardGap, topGap);
     for (var i = 0; i < 4; i++) {
@@ -192,6 +193,7 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
   }
 
   void letsCelebrate({int phase = 1}) {
+    FlameAudio.play('celebration.mp3');
     // Deal won: bring all cards to the middle of the screen (phase 1)
     // then scatter them to points just outside the screen (phase 2).
     //
