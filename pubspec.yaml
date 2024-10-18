@@ -1,6 +1,6 @@
-name: syzygy
-description: Syzygy Flame game
-version: 0.0.0
+name: FlameCard
+description: Card Game made using Flutter and Flame
+version: 1.0.0
 publish_to: none
 
 

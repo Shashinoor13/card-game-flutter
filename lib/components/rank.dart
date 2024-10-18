@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
-import 'package:syzygy/helpers/sprite-helper.dart';
+import 'package:FlameCard/helpers/sprite-helper.dart';
 
 @immutable
 class Rank {

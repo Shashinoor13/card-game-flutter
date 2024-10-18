@@ -1,4 +1,4 @@
-# syzygy
+# FlameCard
 
 A new Flutter project.
 

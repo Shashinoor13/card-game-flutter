@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:syzygy/components/card.dart';
-import 'package:syzygy/components/pile.dart';
-import 'package:syzygy/klondike_game.dart';
+import 'package:FlameCard/components/card.dart';
+import 'package:FlameCard/components/pile.dart';
+import 'package:FlameCard/klondike_game.dart';
 
 class WastePile extends PositionComponent
     with HasGameReference<KlondikeGame>
@@ -24,13 +24,10 @@ class WastePile extends PositionComponent
 
   void _fanOutTopCards() {
     if (game.klondikeDraw == 1) return;
-
     final n = _cards.length;
-
     for (var i = 0; i < n; i++) {
       _cards[i].position = position;
     }
-
     if (n == 2) {
       _cards[1].position.add(_fanOffset);
     } else if (n >= 3) {
@@ -64,14 +61,15 @@ class WastePile extends PositionComponent
   }
 
   @override
-  bool canMoveCard(Card card) => _cards.isNotEmpty && _cards.last == card;
-
+  @override
+  bool canMoveCard(Card card, MoveMethod method) =>
+      _cards.isNotEmpty && card == _cards.last;
   @override
   bool canAcceptCard(Card card) => false;
 
   @override
-  void removeCard(Card card) {
-    assert(canMoveCard(card));
+  void removeCard(Card card, MoveMethod method) {
+    assert(canMoveCard(card, method));
     _cards.removeLast();
     _fanOutTopCards();
   }

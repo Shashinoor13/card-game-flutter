@@ -1,6 +1,6 @@
 {
-    "name": "syzygy",
-    "short_name": "syzygy",
+    "name": "FlameCard",
+    "short_name": "FlameCard",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,17 +1,19 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:syzygy/components/card.dart';
-import 'package:syzygy/components/pile.dart';
-import 'package:syzygy/components/suite.dart';
-import 'package:syzygy/klondike_game.dart';
+import 'package:FlameCard/components/card.dart';
+import 'package:FlameCard/components/pile.dart';
+import 'package:FlameCard/components/suite.dart';
+import 'package:FlameCard/klondike_game.dart';
 
 class FoundationPile extends PositionComponent implements Pile {
-  FoundationPile(int intSuite, {super.position})
-      : suite = Suite.fromInt(intSuite),
+  FoundationPile(int intSuite, this.checkWin, {super.position})
+      : suite = Suit.fromInt(intSuite),
         super(size: KlondikeGame.cardSize);
-  final Suite suite;
+  final Suit suite;
   final List<Card> _cards = [];
+  bool get isFull => _cards.length == 13;
+  final VoidCallback checkWin;
 
   void acquiredCard(Card card) {
     assert(card.isFaceUp);
@@ -42,19 +44,20 @@ class FoundationPile extends PositionComponent implements Pile {
   }
 
   @override
-  bool canMoveCard(Card card) => _cards.isNotEmpty && card == _cards.last;
+  bool canMoveCard(Card card, MoveMethod method) =>
+      _cards.isNotEmpty && card == _cards.last;
 
   @override
   bool canAcceptCard(Card card) {
     final topCardRank = _cards.isEmpty ? 0 : _cards.last.rank.value;
-    return card.suite == suite &&
+    return card.suit == suite &&
         card.rank.value == topCardRank + 1 &&
         card.attachedCards.isEmpty;
   }
 
   @override
-  void removeCard(Card card) {
-    assert(canMoveCard(card));
+  void removeCard(Card card, MoveMethod method) {
+    assert(canMoveCard(card, method));
     _cards.removeLast();
   }
 
