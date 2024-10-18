@@ -104,7 +104,7 @@ class Card extends PositionComponent
   }
 
   static final Paint frontBackgroundPaint = Paint()
-    ..color = const Color(0xff000000);
+    ..color = const Color.fromARGB(255, 255, 255, 255);
   static final Paint redBorderPaint = Paint()
     ..color = const Color(0xffece8a3)
     ..style = PaintingStyle.stroke
@@ -115,11 +115,23 @@ class Card extends PositionComponent
     ..strokeWidth = 10;
   static final blueFilter = Paint()
     ..colorFilter = const ColorFilter.mode(
-      Color(0x880d8bff),
+      Color.fromARGB(134, 0, 0, 0),
+      BlendMode.srcATop,
+    );
+
+  static final redFilter = Paint()
+    ..colorFilter = const ColorFilter.mode(
+      Color.fromARGB(134, 255, 0, 0),
       BlendMode.srcATop,
     );
   static final Sprite redJack = klondikeSprite(81, 565, 562, 488);
-  static final Sprite redQueen = klondikeSprite(717, 541, 486, 515);
+  static final Paint redQueenBorderPaint = Paint()
+    ..color = const Color.fromARGB(255, 0, 0, 0)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 10;
+
+  static final Sprite redQueen = klondikeSprite(717, 541, 486, 515)
+    ..paint = redQueenBorderPaint;
   static final Sprite redKing = klondikeSprite(1305, 532, 407, 549);
   static final Sprite blackJack = klondikeSprite(81, 565, 562, 488)
     ..paint = blueFilter;
@@ -137,8 +149,11 @@ class Card extends PositionComponent
 
     final rankSprite = suit.isBlack ? rank.blackSprite : rank.redSprite;
     final suitSprite = suit.sprite;
-    _drawSprite(canvas, rankSprite, 0.1, 0.08);
-    _drawSprite(canvas, suitSprite, 0.1, 0.18, scale: 0.5);
+    _drawSprite(canvas, rankSprite..paint = suit.isRed ? redFilter : blueFilter,
+        0.1, 0.08);
+    _drawSprite(canvas, suitSprite..paint = suit.isRed ? redFilter : blueFilter,
+        0.1, 0.18,
+        scale: 0.5);
     _drawSprite(canvas, rankSprite, 0.1, 0.08, rotate: true);
     _drawSprite(canvas, suitSprite, 0.1, 0.18, scale: 0.5, rotate: true);
     switch (rank.value) {
