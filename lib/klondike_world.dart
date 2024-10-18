@@ -1,5 +1,6 @@
 import 'dart:math';
 
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:FlameCard/components/card.dart';
@@ -9,6 +10,7 @@ import 'package:FlameCard/components/stock-pile.dart';
 import 'package:FlameCard/components/tableau-pile.dart';
 import 'package:FlameCard/components/waste-pile.dart';
 import 'package:FlameCard/klondike_game.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
   final cardGap = KlondikeGame.cardGap;
@@ -27,6 +29,7 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
     Flame.device.fullScreen();
     Flame.device.setLandscape();
     await Flame.images.load('klondike-sprites.png');
+    await FlameAudio.audioCache.loadAll(['swipe.mp3', 'flip.mp3']);
     stock.position = Vector2(cardGap, topGap);
     waste.position = Vector2(cardSpaceWidth + cardGap, topGap);
     for (var i = 0; i < 4; i++) {
@@ -127,13 +130,10 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
     }
 
     // For the "Same deal" option, re-use the previous seed, else use a new one.
-
     cards.shuffle(Random(game.seed));
 
     // Each card dealt must be seen to come from the top of the deck!
-
     var dealPriority = 1;
-
     for (final card in cards) {
       card.priority = dealPriority++;
     }
@@ -143,11 +143,9 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
     var cardToDeal = cards.length - 1;
 
     var nMovingCards = 0;
-
     for (var i = 0; i < 7; i++) {
       for (var j = i; j < 7; j++) {
         final card = cards[cardToDeal--];
-
         card.doMove(
           tableauPiles[j].position,
           speed: 15.0,
@@ -155,12 +153,10 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
           startPriority: (100 + nMovingCards),
           onComplete: () {
             tableauPiles[j].acquireCard(card);
-
             nMovingCards--;
-
+            FlameAudio.play('swipe.mp3');
             if (nMovingCards == 0) {
               var delayFactor = 0;
-
               for (final tableauPile in tableauPiles) {
                 delayFactor++;
 
@@ -173,7 +169,7 @@ class KlondikeWorld extends World with HasGameReference<KlondikeGame> {
         nMovingCards++;
       }
     }
-
+    // FlameAudio.bgm.stop();
     for (var n = 0; n <= cardToDeal; n++) {
       stock.acquireCard(cards[n]);
     }

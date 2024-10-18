@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/animation.dart';
 import 'package:FlameCard/components/foundation-pile.dart';
 import 'package:FlameCard/components/pile.dart';
@@ -449,6 +450,7 @@ class Card extends PositionComponent
           turnFaceUp(
             onComplete: whenDone,
           );
+          FlameAudio.play('flip.mp3');
         },
       ),
     );
